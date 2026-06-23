@@ -1,0 +1,12 @@
+div{
+    background-color: aquamarine;
+    color: aqua;
+    text-align: center;
+    width: 200px;
+}
+div p{
+    color: cadetblue;
+}
+h1{
+    color: cornflowerblue;
+}
