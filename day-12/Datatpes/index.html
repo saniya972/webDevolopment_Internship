@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    //Data types -means different types of Data
+    //1.Strings - anything between Quotes is string or text-decoration
+    <script>
+        var coustemerName = "Sani"
+        console.log(typeof(coustemerName))
+
+        //2.Number - -ve,+ve,decimal
+        var age = -12.98
+        console.log(typeof(age))
+
+        //Boolean - true or false
+        var logged = true
+        var netflix =false
+        console.log(typeof(logged))
+        console.log(typeof(netflix))
+
+        //4.Undifined - when no value is assigned
+        var x 
+        console.log(typeof(x))
+
+        //5.null - nothing
+        var discount = null
+        console.log(typeof(discount))
+
+        // There is a bug in js - null data type shows object as output
+
+        //2.Data type -
+        //Arrays - store multiple data
+        //Arrays can store multiple data of different data types
+        //symbol - []
+        //index start with 0
+
+        var students = ["Sam","sani","fouzi",1101,true]
+        console.log(students)
+         // length of the data
+        console.log(students.length)
+
+        //Access data through index num
+        console.log(students[1])
+        console.log(students[3])
+
+        //2. Object - Collection of object that belong to single group
+        //Symbol - { }
+        //Rule - key:value pair
+
+        var employee = {
+            //key(left) : value(right)
+            name:"sani",
+            email:"sani@gmail.com",
+            logged : true
+        }
+        console.log(employee)
+
+        //access object with key - objectName.key
+        console.log(employee.name)
+        console.log(employee.email)
+
+        //function - to do specific task
+        //keyword - function functionName
+
+        // Task - Build Billcalculator for my ecomerse website
+
+        function Billcalculator(){
+            //function body
+
+            var prod1 = "Milk"
+            var prod2 = "curd"
+            var price1 = 100
+            var price2 = 50
+            var total = price1 + price2
+            console.log("The total price of ",prod1 ,"and ",prod2 ,"is ",total)
+        }
+        Billcalculator()
+    </script>
+     
+     
+</body>
+</html>
