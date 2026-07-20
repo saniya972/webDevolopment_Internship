@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechNova</title>
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+   nav{
+    background-color: rgba(8, 131, 161, 0.808);
+    padding: 15px;
+    position:fixed;
+    width: 100%;
+    top: 0;
+            
+    }
+    nav a{
+    color: white;
+    text-decoration: none;
+     margin:20px;
+    font-size: 18px;
+            
+    }
+    nav a:hover{
+     color: gold;
+     transition: 2s;
+    }
+    .btn {
+    text-decoration: none;
+    background: #0077ff;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+     background: #005ecc;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    padding: 50px 10%;
+}
+
+.hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.hero-text p {
+    font-size: 28px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 15px 35px;
+    background: #0077ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #005ecc;
+}
+
+.hero-image {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 450px;
+}
+
+.features{
+    padding:60px 10%;
+    background:#f8f9fa;
+    text-align:center;
+}
+
+.features h2{
+    font-size:35px;
+    color:#0077cc;
+    margin-bottom:40px;
+}
+
+.feature-container{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    
+}
+
+.feature-box{
+    width:220px;
+    background:#fff;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+    
+}
+
+.feature-box:hover{
+    transform:translateY(-10px);
+}
+
+.feature-box img{
+    width:70px;
+    height:70px;
+    margin-bottom:15px;
+}
+
+.feature-box h3{
+    margin-bottom:10px;
+    color:#333;
+    font-size: 25px;
+}
+
+.feature-box p{
+    color:#666;
+    font-size:20px;
+}
+
+
+.benefits{
+    padding:60px 10%;
+    background:#ffffff;
+    text-align:center;
+}
+
+.benefits h2{
+    font-size:36px;
+    color:#0077cc;
+    margin-bottom:40px;
+}
+
+.benefit-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    font-size: large;
+}
+
+.benefit-box{
+    background:#f8f9fa;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.benefit-box:hover{
+    transform:translateY(-8px);
+}
+
+.benefit-box h3{
+    color:#333;
+    margin-bottom:15px;
+}
+
+.benefit-box p{
+    color:#666;
+    line-height:1.6;
+}
+
+.price{
+    text-align:center;
+    padding:70px 30px;
+    background:#f4f4f4;
+}
+
+.price-card{
+    width:400px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 4px 8px gray;
+}
+
+.price h2{
+    color:#0077cc;
+}
+
+.price-card h1{
+    color:#0077cc;
+}
+
+.price-card button{
+    padding:10px 20px;
+    background:#0077cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.reviews{
+    padding:60px 20px;
+    text-align:center;
+    background:#f8f9fa;
+}
+
+.review-container{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.review-card{
+    width:250px;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    font-size: 20px;
+}
+
+.review-card h4{
+    color:gold;
+}
+
+.contact{
+    text-align:center;
+    padding:60px 20px;
+    background:rgba(8, 131, 161, 0.808);
+    color:white;
+}
+
+.contact h2{
+    margin-bottom:20px;
+}
+
+.contact p{
+    margin:10px 0;
+}
+
+.contact button{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    border-radius:5px;
+    background:white;
+    color:#0077cc;
+    cursor:pointer;
+}
+
+.contact button:hover{
+    background:#f2f2f2;
+}
+
+
+@media (max-width: 768px) {
+
+    nav{
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    nav ul{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero{
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content{
+        margin-bottom: 20px;
+    }
+
+    .hero img{
+        width: 250px;
+    }
+
+    .feature-container,
+    .benefit-container{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-box,
+    .benefit-box,
+    .price-card{
+        width: 90%;
+    }
+
+    .price-container{
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+</style>
+    
+</head>
+<body>
+     <nav>
+    <a href="#hero"> Home</a>
+    <a href="#features">Features</a>
+    <a href="#benifits">Benefits</a>
+    <a href="#price">Price</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#contact">Contact</a>
+   </nav>
+<section id="hero">
+    <div class="hero-content">
+
+        <div class="hero-text">
+            <h1>PulseX Pro Smartwatch</h1>
+
+            <p>
+                Stay connected, monitor your health, and track your fitness
+                with the all-new PulseX Pro Smartwatch.
+            </p>
+
+            <button class="btn">Buy Now</button>
+        </div>
+
+        <div class="hero-image">
+            <img src="https://images.pexels.com/photos/14691508/pexels-photo-14691508.jpeg?auto=compress&h=153&w=171&fit=crop&dpr=1">
+        </div>
+
+    </div>
+</section>
+   <section id="features" class="features">
+    <h2>Features</h2>
+    <div class="feature-container">
+        <div class="feature-box">
+            <img src="https://media.istockphoto.com/id/1286099942/photo/close-up-of-hand-touching-smartwatch-with-health-app-on-the-screen-gadget-for-fitness-active.jpg?b=1&s=612x612&w=0&k=20&c=fGQr8nLYwk7RMKlTBmJsRCCk00FzTu86hNXDSnInPkQ=">
+        <h3>Heart Rate Monitor</h3>
+        <p>Monitor your heart rate 24/7 for better health tracking.</p>
+    </div>
+    <div class="feature-box">
+        <img src="https://media.istockphoto.com/id/2206651008/photo/woman-sleeping-peacefully-in-bed-wearing-a-smart-watch-to-track-her-sleep.jpg?b=1&s=612x612&w=0&k=20&c=WoJoEJIJI7pdcXtdelfSspm4kgRru57_Sb4WHE0o4W8=">
+        <h3>Sleep Tracking</h3>
+        <p>Track your sleep quality and improve your daily routine.</p>
+    </div>
+    <div class="feature-box">
+        <img src="https://media.istockphoto.com/id/638029946/photo/smartwatch-charging-on-wireless-charger.jpg?b=1&s=612x612&w=0&k=20&c=vxd3ejFsv3HRmDpaRllzHdyZ2faGiZ0Je9r1Idcfu1E=">
+        <h3>Long Battery Life</h3>
+        <p>Enjoy up to 10 days of battery backup on a single charge.</p>
+    </div>
+    <div class="feature-box">
+        <img src="https://media.istockphoto.com/id/1215997811/photo/the-smartwatch-falls-into-the-water-with-the-swimming-training-app-displayed.jpg?b=1&s=612x612&w=0&k=20&c=i7s8NthOgmS3gJ6TsIyhxK02_-eFfmITAHDb1aYKfIU=">
+        <h3>Water Resistant</h3>
+        <p>Safe for workouts, rain, and everyday use.</p>
+    </div>
+ </div>
+   </section>
+   <section id="benefits" class="benefits">
+    <h2>Why Choose PulseX pro?</h2>
+    <div class="benefit-container"> 
+        <div class="benefit-box">
+            <h3> Improve Fitness</h3>
+            <p>Track your daily steps, calories burned, and workouts to acheive your fitness goals.</p>
+        </div>
+        <div class="benefit-box"> 
+            <h3>Better Health</h3>
+            <p>Monitor heart rate, blood oxygen levels, and sleep quality to stay heaithy.</p>
+        </div>
+        <div class="benefit-box">
+             <h3> Long Battery Life</h3>
+             <p>Use our smartWatch for up to 10 days without worrying about frequent charging.</p>
+        </div>
+        <div class="benefit-box">
+            <h3>Smart-Notifications</h3>
+            <p>Receive calls, messages, emails, and app notifications directly on your wirst.</p>
+        </div>
+    </div>
+
+   </section>
+   <section id="price" class="price">
+    <h2>Price</h2>
+    <div class="price-card">
+        <h3>PulseX Pro SmartWatch</h3>
+        <h1>Rs.4,999</h1>
+    
+        <p>✅ Heart Rate Monitor</p>
+        <p>✅ Sleep Tracking</p>
+        <p>✅ Water Resistant</p>
+        <p>✅ 10-Day Battery Life</p>
+        <button>Buy Now</button>
+
+    </div>
+
+   </section>
+   <section id="reviews" class="reviews">
+    <h2>Customer Reviews</h2>
+    <div class="review-container">
+        <div class="review-card">
+            <p>"Amazing battery life and stylish design!"</p>
+            <h4>⭐⭐⭐⭐⭐</h4>
+            <h5>- Anjali</h5>
+        </div>
+        <div class="review-card">
+            <p>"Very comfortable to wear and use."</p>
+            <h4>⭐⭐⭐⭐⭐</h4>
+            <h5>- Rahul</h5>
+        </div>
+        <div class="review-card">
+            <p>"Great value for money. Highly recommended."</p>
+            <h4>⭐⭐⭐⭐⭐</h4>
+            <h5>- Priya</h5>
+        </div>
+    </div>
+   </section>
+
+   <section id="contact" class="contact">
+    <h2>Contact Us</h2>
+
+    <p>📧 Email: support@pulsexpro.com</p>
+    <p>📞 Phone: +91 9876543210</p>
+    <p>📍 Hyderabad, India</p>
+
+    <button>Contact Now</button>
+</section>
+   <footer>
+          &copy; PulseX Pro Smartwatch
+
+   </footer>
+   
+</body>
+</html>
