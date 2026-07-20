@@ -119,7 +119,7 @@
         .d{
             background: linear-gradient(135deg,#0f172a,#2563eb);;
             width: 100%;
-            height: 601px;
+            height: 800;
             color: white;
             font-size: x-large;
              display: flex;
@@ -128,8 +128,41 @@
             align-items: center;
         
         }
+
+        .Menu{
+        border: 2px solid black;
+        width : 350px;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        text-align: center;
+        box-shadow: 4px 4px 8px black;
+         height: 70vh;
+        display: flex;
+        justify-content: center;
+        gap:20px ;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .Menu h2{
+        border-bottom:1px solid black;
+    }
+    .Menu img{
+        width:100%;
+        height:240px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+    
+    .Menu button{
+        background-color: darkgray;
+        border: none;
+        padding: 10px;
+        border-radius: 12px;
+        width:90%;
+    }
         a{
-            color: blue;
+            color: white;
             
         }
         a:hover{
@@ -142,6 +175,28 @@
         img{
             height: 50px;
             width: 50px;
+        }
+        .contact-form{
+            flex: 1;
+            min-width: 300px;
+        }
+        .contact-form input{
+            width: 100px;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: large;
+
+        }
+        .contact-form button{
+              padding: 10px 20px;
+              background: #00bcd4;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
         }
 
     </style>
@@ -211,7 +266,7 @@
     </section>
     <section id="projects">
         <h1>Project</h1>
-         <div class="div">
+    <div class="div">
         <h2> Internships</h2>
         <ul>
         <li>Java Full Stack Developer Intern - Eduskills(Completed internship in java full stack development)</li>
@@ -223,13 +278,12 @@
         </ul>
         <br>
         <h2>Projects</h2>
-        <ul>
-            <li>Designed Calculator - Developed a basic calculator applications to perform arithmatic operations.</li>
-            <br>
-            <li>Bank Account Programming - Implemented a program to manage bank account operations like deposit and withdrawal.</li>
-            <br>
-            <li>Number Finding Game - Created a game where the user guesses a randomly generated number.</li>
-        </ul>
+        <div class="Menu">
+        <img src="https://media.istockphoto.com/id/842811508/photo/website-landing-page-development-sketch-on-math-book.jpg?b=1&s=612x612&w=0&k=20&c=iVLCiqp4WRixeyE8bkfBeTQTI2BCDipnYlcC6DxAFvs=" height="150" width="200">
+        <h2>Landing Page</h2>
+        <p>Desighned a Landing page using html and css</p>
+        
+    </div>
     </div>
     </section>
     <section id="Certificates">
@@ -239,14 +293,25 @@
             <li>Java full stack developer</li>
             <a href="Saniya Internship Certificate.pdf">java fullstack developer</a>
             <br>
+            <br>
             <li>NPTL - Oops Through java</li>
             <a href="WhatsApp Image 2026-07-18 at 9.51.14 PM.jpeg">nptl</a>
         </ul>
-        <div>
+        </div>
+        <div class = "contact-info">
             <h2>Contact Me</h2>
             <p>Email: <a href="mailto:saniya972nrpt@gamil.com">saniya972nrpt@gamil.com</a></p>
             <p> Phone: <a href="tel:7893530179">7893530179</a></p>
             <p> Location: Hyderabad,Telangana</p>
+        </div>
+        <div class="contact form">  
+        <form> 
+            <label>Name</label>
+            <input placeholder="Enter your name"><br><br>
+            <label>Email</label><sup>*</sup>
+            <input type="email" placeholder="Enter Email" required><br><br>
+            <button type="submit">Submit</button>
+        </form>
         </div>
     </section>
    
