@@ -4,316 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body{
-            margin:0;
-            font-family:Arial, Helvetica, sans-serif;
-            background: linear-gradient(135deg,#0f172a,#2563eb);
-            color: white;
-        }
+    <link rel="stylesheet" href="style.css">
         
-        nav{
-            background-color: rgba(8, 131, 161, 0.808);
-            padding: 15px;
-            position:fixed;
-            width: 100%;
-            top: 0;
-            
-        }
-        nav a{
-            color: white;
-            text-decoration: none;
-            margin:20px;
-            font-size: 18px;
-            
-        }
-        nav a:hover{
-            color: gold;
-            transition: 2s;
-        }
-        section{
-            min-height: 50px;
-            padding: 100px 50px;
-        }
-        #home{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            font-size: x-large;
-        }
-        #home h1{
-            font-size: 60px;
-            margin-bottom: 10px;
-        }
-        .btn{
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: #0077B5;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 18px;
-            transition: 0.3s;
-        }
-        .btn:hover{
-            background-color: #005582;
-        }
-        #about{
-            
-            background: linear-gradient(135deg,#0f172a,#2563eb);
-            width:100%;
-            height:600px;
-            color: white;
-            font-size: x-large;
-            
-        }
-        
-          
-        #skills{
-            text-align: center;
-        }
-        .container{
-            background:linear-gradient(135deg,#0f172a,#2563eb);
-            width:100%;
-            height:600px;
-            color: white;
-            font-size: x-large;
-            display: flex;
-            
-            
-        }
-        .column ul{
-            display: inline-block;
-            text-align: left;
-            list-style-position: outside;
-            padding: 20px;
-        }
-        .column li{
-            margin: 10px 0;
-        }
-        .column{
-               width: 50%;
-               background:linear-gradient(135deg,#0f172a,#2563eb);
-               padding: 20px;
-        }
-        .column{
-               width: 50%;
-               background:linear-gradient(135deg,#0f172a,#2563eb);
-               padding: 20px;
-        }
-        h2{
-            text-decoration: underline;
-        }
-        .div{
-            background:linear-gradient(135deg,#0f172a,#2563eb);;
-            color: white;
-            width: 100%;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto;
-            font-size: x-large;
-        }
-        .d{
-            background: linear-gradient(135deg,#0f172a,#2563eb);;
-            width: 100%;
-            height: 800;
-            color: white;
-            font-size: x-large;
-             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        
-        }
-
-        .Menu{
-        border: 2px solid black;
-        width : 350px;
-        padding: 12px;
-        border-radius: 12px;
-        margin-bottom: 10px;
-        text-align: center;
-        box-shadow: 4px 4px 8px black;
-         height: 70vh;
-        display: flex;
-        justify-content: center;
-        gap:20px ;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-    .Menu h2{
-        border-bottom:1px solid black;
-    }
-    .Menu img{
-        width:100%;
-        height:240px;
-        object-fit: cover;
-        border-radius: 12px;
-    }
-    
-    .Menu button{
-        background-color: darkgray;
-        border: none;
-        padding: 10px;
-        border-radius: 12px;
-        width:90%;
-    }
-        a{
-            color: white;
-            
-        }
-        a:hover{
-            color: gold;
-        }
-        h2{
-            text-decoration: underline;
-            
-        }
-        img{
-            height: 50px;
-            width: 50px;
-        }
-        .contact-form{
-            flex: 1;
-            min-width: 300px;
-        }
-        .contact-form input{
-            width: 100px;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            font-size: large;
-
-        }
-        .contact-form button{
-              padding: 10px 20px;
-              background: #00bcd4;
-              color: white;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-        }
-
-    </style>
 </head>
 <body>
     <nav>
-    <a href="#home"> Home</a>
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#projects">project</a>
-    <a href="#Certificates">Certification</a>
+    <a href="home.html;"> Home</a>
+    <a href="abount.html">About</a>
+    <a href="skills.html">Skills</a>
+    <a href="project.html">project</a>
+    <a href="certificate.html">Certification</a>
+    <a href="contact.html">Contact Me</a>
    
     </nav>
-    <section id="home">
+    
         <div class="home">
         <h1>SANIYA</h1>
         <p> 
             Motivated and enthusiastic B.Tech Computer Science student
         </p>
+        <div class="button">
         <a href=" https://www.linkedin.com/in/saniya-qhureshi-35a7b3b0" target="_blank" class="btn linkedin">
             Linkedin
         </a>
         <a href="https://github.com/saniya972" target="_blank" class="btn github">Github</a>
-        
+        </div>
     
     </div>
-     </section>
-    <section id="about"> 
-        <h1>About</h1>
-         <div>
-         <p>
-          Motivated and enthusiastic B.Tech Computer Science student
-        </p>
-        <p>
-            with a strong intrest in software development and emerging technologies.
-        </p>
-        <p>
-          Detail-oriented Third-year student with CGPA 9.0
-        </p>
-        <p>
-            seeking internship opportunities,with strong leadership,communication skills,and eagerness to learn.
-        </p>
-    </div>
-    </section>
-    <section id="skills">
-         <div class="container">
-        <div class="column">
-            <h2>Skills</h2>
-            <ul>
-            <li>Self-motivated</li>
-            <li>Adaptive nature</li>
-            <li>Good communication</li>
-            <li>Hardworking</li>
-            </ul>
-        </div>
-        <div>
-            <h2>Technical Skills</h2>
-            <ul>
-            <li>C</li>
-            <li>Java</li>
-            <li>Python</li>
-            <li>Data Structures</li>
-            <li>HTML,CSS</li>
-            </ul>
-        </div>
-    </div>
-    </section>
-    <section id="projects">
-        <h1>Project</h1>
-    <div class="div">
-        <h2> Internships</h2>
-        <ul>
-        <li>Java Full Stack Developer Intern - Eduskills(Completed internship in java full stack development)</li>
-        <br>
-        <li>AWS Cloud Engineering Intern - Eduskills(Completed internship in AWs Cloud computing)</li>
-        <br>
-        <li>Web Development Intern - Unlox(Completed internship in web development)</li>
-        </li>
-        </ul>
-        <br>
-        <h2>Projects</h2>
-        <div class="Menu">
-        <img src="https://media.istockphoto.com/id/842811508/photo/website-landing-page-development-sketch-on-math-book.jpg?b=1&s=612x612&w=0&k=20&c=iVLCiqp4WRixeyE8bkfBeTQTI2BCDipnYlcC6DxAFvs=" height="150" width="200">
-        <h2>Landing Page</h2>
-        <p>Desighned a Landing page using html and css</p>
-        
-    </div>
-    </div>
-    </section>
-    <section id="Certificates">
-        <div class="d">
-        <h2>Certifications</h2>
-        <ul>
-            <li>Java full stack developer</li>
-            <a href="Saniya Internship Certificate.pdf">java fullstack developer</a>
-            <br>
-            <br>
-            <li>NPTL - Oops Through java</li>
-            <a href="WhatsApp Image 2026-07-18 at 9.51.14 PM.jpeg">nptl</a>
-        </ul>
-        </div>
-        <div class = "contact-info">
-            <h2>Contact Me</h2>
-            <p>Email: <a href="mailto:saniya972nrpt@gamil.com">saniya972nrpt@gamil.com</a></p>
-            <p> Phone: <a href="tel:7893530179">7893530179</a></p>
-            <p> Location: Hyderabad,Telangana</p>
-        </div>
-        <div class="contact form">  
-        <form> 
-            <label>Name</label>
-            <input placeholder="Enter your name"><br><br>
-            <label>Email</label><sup>*</sup>
-            <input type="email" placeholder="Enter Email" required><br><br>
-            <button type="submit">Submit</button>
-        </form>
-        </div>
-    </section>
    
 </body>
 </html>
