@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="myP">This is paragraph tag</p>
+    <div class="myC">This is a div container-0</div>
+    <div class="myC">This is a div container-1</div>
+    <p>This is paragraph-1</p>
+    <p>This is paragraph-2</p>
+    <button>Login</button>
+    <div class="box">HTML</div>
+    <div class="box">JavaScript</div>
+
+    <script>
+           const paragraph = document.getElementById("myP")
+           console.log(paragraph)
+           console.log(paragraph.textContent)
+
+           const container = document.getElementsByClassName("myC")
+           console.log(container)
+           console.log(container[1])
+           console.log(container[1].textContent)
+
+           const tag = document.getElementsByTagName("p")
+           console.log(tag)
+           console.log(tag[1])
+           console.log(tag[1].textContent)
+
+           const b = document.getElementsByTagName("button")
+           console.log(b)
+           console.log(b[0].textContent)
+
+           //querySelector-->I will follow css selector formula  #idName,TagName,ClassName
+           //select the first HTML single element/tag
+           const abc = document.querySelector(".box")
+           console.log(abc)
+
+           const xyz = document.querySelectorAll(".box")
+           console.log(xyz)
+  </script>
+</body>
+</html>

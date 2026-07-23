@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--EXAMPLE 1 - updating textcontent-->
+    <button id="btn">Login</button>
+    <p id="mp">Hello Guest</p>
+    <!--EXAMPLE 2 - updating tag itself-->
+
+    <div id="mydiv" style="background-color: beige;">This is a div</div>
+
+    <!--EXAMPLE 3 - changing css properties-->
+
+    <p id="abc">This is old dull paragraph</p>
+
+    <!--EXAMPLE 4 - create Element/Tag with Though Js-->
+    <ul id="xyz">
+        <li>Gym</li>
+        
+    </ul>
+
+    <script>
+        //update textContent
+        const button = document.getElementById("btn")
+        console.log(button)
+        console.log(button.textContent)
+        button.textContent = "Logout"
+        const para = document.getElementById("mp")
+        para.textContent = "Hello Saniya"
+
+        //update tag - innerHTML - which helps us to update tag also content as well
+        const d = document.getElementById("mydiv")
+        console.log(d)
+
+        //single html tags are under quotes
+
+
+       // d.innerHTML = "<h2> Hello Guyyss.. </h2>"
+
+       //multiple html tags are under backtike ``
+       d.innerHTML = `
+       <p>This is<mark>Update</mark> Tag</p>
+       <img src="https://media.istockphoto.com/id/1290360101/photo/baby-in-the-backyard.jpg?b=1&s=612x612&w=0&k=20&c=dV3Y3ipveNKalHNms8hTxl7_XX7FMiAuum8HzJEwqQ8= " height="100" width="150"
+       <button>Smile</button>
+       `
+       //we can also do styling with java script
+       //.style.propertyName
+
+       const s = document.getElementById("abc")
+       s.style.color="red"
+       s.style.backgroundColor = "black"
+       s.style.textAlign = "center"
+       s.textContent = "This is new paragraph tag"
+
+       const list = document.getElementById("xyz")
+       //document.createElement("TagName")
+
+       const li = document.createElement("li")
+       li.textContent = "Office"
+       li.style.color = "red"
+
+       //ParentName.appendChild(TagName)
+       list.appendChild(li)
+       
+
+    </script>
+</body>
+</html>
