@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+        }
+        .piano{
+            display:flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .key{
+            border: 1px solid black;
+            width : 60px;
+            height : 200px;
+            margin: 2px;
+            background-color: white;
+            box-shadow: 2px 2px 5px black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Piano - Event</h1>
+    <div class="piano">
+        <div class="key" data-note="A">A</div>
+        <div class="key" data-note="A">B</div>
+        <div class="key" data-note="A">C</div>
+        <div class="key" data-note="A">D</div>
+        <div class="key" data-note="A">E</div>
+        <div class="key" data-note="A">F</div>
+        <div class="key" data-note="A">G</div>
+        <div class="key" data-note="A">H</div>
+    </div>
+
+    <audio id="audio-A" src="./freemanstudio-piano-sound-230348 (1).mp3"></audio>
+    <audio id="audio-B" src="./freesound_community-fa-78409.mp3"></audio>
+    <audio id="audio-C" src="./freesound_community-la-80237.mp3"></audio>
+    <audio id="audio-D" src="./freesound_community-mi-80239.mp3"></audio>
+    <audio id="audio-E" src="./freesound_community-re-78500.mp3"></audio>
+    <audio id="audio-F" src="./freesound_community-sol-101774.mp3"></audio>
+    <audio id="audio-G" src="./royalty_free_music-soft-piano-100-bpm-121529.mp3"></audio>
+    <audio id="audio-H" src="./u_c58whxla22-c-422088.mp3"></audio>
+
+    <script>
+        const keys = document.querySelectorAll(".key")
+        console.log(keys)  //keys is an array which stores all the div containers
+
+        keys.forEach( function(e){
+            const note = e.getAttribute("data-note")
+
+            const audio = document.getElementById("audio-"+note)
+
+            //Action click
+            e.addEventListener('click',function(){
+                audio.currentTime = 0;
+                audio.play()
+            })
+
+            //Mouse
+            e.addEventListener('mouseover',function(){
+                e.style.backgroundColor = "lightblue"
+            })
+
+             e.addEventListener('mouseout',function(){
+                e.style.backgroundColor = "white"
+            })
+        })
+    </script>
+</body>
+</html>
