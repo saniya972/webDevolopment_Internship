@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //LOcal storage - it is a longe term storage of data,it is permanent storage format and it doen not have expiry
+
+        //syntax - localStorage.setItem(key,value)
+
+        localStorage.setItem("employees",["sani","akki","sindu"])
+        const data = localStorage.getItem("employees")
+        console.log(data)
+
+        localStorage.removeItem("employees")
+    </script>
+</body>
+</html>

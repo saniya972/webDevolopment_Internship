@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let name = "saniya"
+        let country = "India"
+        console.log(`Dear ${name} ,
+        How are you Did you come from ${country},
+        Have a nice day
+        `)
+        let xyz = function(){
+            console.log("Hello I am old function")
+        }
+        xyz()
+            //arrow function
+        let abc = ()=> console.log("Hello i am arrow function in a single line")
+        abc()
+
+        //set the timmer to the function
+        setTimeout(()=>{
+            console.log("I will give you the output after some time")
+        },5000) //1000 = 1sec
+
+        setInterval(()=>{
+            console.log("code will run after evry 3 secs of break")
+        },3000)
+    </script>
+</body>
+</html>
