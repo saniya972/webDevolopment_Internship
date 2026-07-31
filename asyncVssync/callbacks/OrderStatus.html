@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function first(status,callback){
+              console.log("Order Confirmed "+status)
+              callback("pizza",function(){
+                console.log("Out of delivery")
+              })
+        }
+        first("Order num 123",function(status2,callback){
+            console.log("Preparing Items " +status2)
+            callback()
+        })
+    </script>
+</body>
+</html>
