@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search App</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎬 Movie Search App</h1>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="movieInput"
+            placeholder="Search Movie...">
+
+        <button id="searchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </div>
+
+    <div class="movie-card">
+    <img id="poster" src="" alt="Poster">
+
+    <h2 id="title">Movie Title</h2>
+
+    <p><strong>Year:</strong> <span id="year">--</span></p>
+    <p><strong>IMDb Rating:</strong> <span id="rating">--</span></p>
+    <p><strong>Genre:</strong> <span id="genre">--</span></p>
+    <p><strong>Released:</strong> <span id="released">--</span></p>
+
+    <p id="plot"></p>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
