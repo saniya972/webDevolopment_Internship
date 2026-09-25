@@ -3,13 +3,25 @@ const Package = require("../models/Package");
 const Payment = require("../models/Payment");
 const PackagePurchase = require("../models/PackagePurchase");
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+let razorpay = null;
+
+if (
+    process.env.RAZORPAY_KEY_ID &&
+    process.env.RAZORPAY_KEY_SECRET
+) {
+    razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    });
+}
 
 const createPaymentOrder = async (req, res) => {
     try {
+        if (!razorpay) {
+    return res.status(503).json({
+        message: "Online payment is not configured yet. Please use test payment."
+    });
+}
         const {
             packageId,
             clientName,
@@ -161,7 +173,7 @@ const createTestPayment = async (req, res) => {
             status: "paid"
         });
 
-        const PackagePurchase = require("../models/PackagePurchase");
+        //const PackagePurchase = require("../models/PackagePurchase");
 
 const purchaseDate = new Date();
 
