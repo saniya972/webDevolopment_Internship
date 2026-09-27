@@ -3,8 +3,7 @@ import { io } from "socket.io-client";
 import api from "../api/axios";
 import { jwtDecode } from "jwt-decode";
 
-const socket = io("http://localhost:5000");
-
+const socket = io("https://unfazed-backend-dzvn.onrender.com");
 function Chat() {
     const [clients, setClients] = useState([]);
     const [clientId, setClientId] = useState("");

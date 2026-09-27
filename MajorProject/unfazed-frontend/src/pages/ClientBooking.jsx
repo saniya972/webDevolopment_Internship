@@ -43,6 +43,8 @@ setClientTimezone(timezone);
 
                 setAvailability(availableSlots);
 
+                console.log("AVAILABILITY:", availableSlots);
+
             } catch (error) {
                 console.log(error);
             }
@@ -65,6 +67,8 @@ setClientTimezone(timezone);
             );
 
             setBookedSlots(response.data.bookings);
+            console.log("BOOKED SLOTS:", response.data.bookings);
+            console.log("BOOKING DETAILS:", JSON.stringify(response.data.bookings, null, 2));
         } catch (error) {
             console.log(error);
         }
@@ -128,21 +132,27 @@ setClientTimezone(timezone);
     };
      
 
-       const timeSlots = [];
+      const timeSlots = [];
 
 if (date) {
-    const dateObject = new Date(date + "T00:00:00");
+    // Get weekday from selected date
+    const [year, month, day] = date.split("-").map(Number);
 
-    const selectedDay = dateObject.toLocaleDateString(
-        "en-US",
-        {
-            weekday: "long"
-        }
-    );
+    const dateObject = new Date(Date.UTC(year, month - 1, day));
+
+    const selectedDay = dateObject.toLocaleDateString("en-US", {
+        weekday: "long",
+        timeZone: "UTC"
+    });
+
+    console.log("SELECTED DAY:", selectedDay);
+    console.log("AVAILABILITY:", availability);
 
     const selectedAvailability = availability.find(
-        (item) => item.day === selectedDay
+        (item) => item.day.trim().toLowerCase() === selectedDay.toLowerCase()
     );
+
+    console.log("MATCHED AVAILABILITY:", selectedAvailability);
 
     if (selectedAvailability) {
         let start = parseInt(
@@ -153,30 +163,37 @@ if (date) {
             selectedAvailability.endTime.split(":")[0]
         );
 
+        console.log("START HOUR:", start);
+console.log("END HOUR:", end);
+
         while (start < end) {
             const startHour = String(start).padStart(2, "0");
             const endHour = String(start + 1).padStart(2, "0");
 
-               const slotStartTime = `${startHour}:00`;
-const slotEndTime = `${endHour}:00`;
+            const slotStartTime = `${startHour}:00`;
+            const slotEndTime = `${endHour}:00`;
 
-const isBooked = bookedSlots.some(
-    (booking) =>
-        booking.startTime === slotStartTime
-);
+            const isBooked = bookedSlots.some((booking) => {
+                return (
+                    booking.status === "booked" &&
+                    booking.startTime < slotEndTime &&
+                    booking.endTime > slotStartTime
+                );
+            });
 
-if (!isBooked) {
-    timeSlots.push({
-        startTime: slotStartTime,
-        endTime: slotEndTime
-    });
-}
+            if (!isBooked) {
+                timeSlots.push({
+                    startTime: slotStartTime,
+                    endTime: slotEndTime
+                });
+            }
 
             start++;
         }
     }
 }
 
+console.log("GENERATED TIME SLOTS:", timeSlots);
     return (
         <div>
             <h1>Book a Session</h1>
@@ -235,6 +252,7 @@ if (!isBooked) {
                  <input
     type="date"
     value={date}
+    min="2026-09-25"
     onChange={(e) => setDate(e.target.value)}
     required
 />

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import EditProfile from "../pages/EditProfile";
@@ -23,13 +23,19 @@ function AppRoutes() {
 
                 <Route
     path="/"
-    element={<Dashboard />}
+    element={<Navigate to="/login" replace />}
 />
 
                 <Route
                     path="/login"
                     element={<Login />}
                 />
+
+
+                <Route
+    path="/dashboard"
+    element={<Dashboard />}
+/>
 
                 <Route
     path="/edit-profile"
