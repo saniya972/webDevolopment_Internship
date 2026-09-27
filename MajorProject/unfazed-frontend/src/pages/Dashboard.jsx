@@ -236,6 +236,55 @@ function Dashboard() {
                             <span className="quick-arrow">→</span>
                         </button>
 
+                        <button
+    className="dashboard-quick-card"
+    onClick={() => navigate("/analytics")}
+>
+    <span className="quick-card-icon">📊</span>
+    <span>
+        <strong>Analytics</strong>
+        <small>View your practice performance</small>
+    </span>
+    <span className="quick-arrow">→</span>
+</button>
+
+
+<button
+    className="dashboard-quick-card"
+    onClick={() => navigate("/packages")}
+>
+    <span className="quick-card-icon">📦</span>
+    <span>
+        <strong>Packages</strong>
+        <small>Manage your therapy packages</small>
+    </span>
+    <span className="quick-arrow">→</span>
+</button>
+
+<button
+    className="dashboard-quick-card"
+    onClick={() => navigate("/notes")}
+>
+    <span className="quick-card-icon">📝</span>
+    <span>
+        <strong>Session Notes</strong>
+        <small>Manage client session notes</small>
+    </span>
+    <span className="quick-arrow">→</span>
+</button>
+
+<button
+    className="dashboard-quick-card"
+    onClick={() => navigate("/chat")}
+>
+    <span className="quick-card-icon">💬</span>
+    <span>
+        <strong>Messages</strong>
+        <small>Communicate with clients</small>
+    </span>
+    <span className="quick-arrow">→</span>
+</button>
+
                     </div>
                 </section>
 

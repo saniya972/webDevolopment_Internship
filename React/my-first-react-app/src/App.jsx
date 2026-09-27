@@ -3,7 +3,7 @@ import React from "react";
 function App(){
   //js code should be written here
 
-  return{
+  return(
     //HTML code is written here
     <>
     <h1>Welcome to React</h1>
@@ -16,7 +16,7 @@ function App(){
 
 
   </>
-  }
+  )
 
 }
 export default App
