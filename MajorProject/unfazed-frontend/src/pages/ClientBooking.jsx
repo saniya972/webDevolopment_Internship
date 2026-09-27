@@ -1,300 +1,567 @@
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../api/axios";
+import "../App.css";
 
 function ClientBooking() {
+    const { slug } = useParams();
+
     const [clientName, setClientName] = useState("");
     const [clientEmail, setClientEmail] = useState("");
     const [date, setDate] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
 
-    const { slug } = useParams();
-
     const [therapistId, setTherapistId] = useState("");
+    const [therapist, setTherapist] = useState(null);
     const [availability, setAvailability] = useState([]);
     const [clientTimezone, setClientTimezone] = useState("");
     const [bookedSlots, setBookedSlots] = useState([]);
+
+    const [loading, setLoading] = useState(true);
+    const [booking, setBooking] = useState(false);
+    const [error, setError] = useState("");
+
+    // Today's date in YYYY-MM-DD format
+    const today = new Date();
+    const minDate =
+        today.getFullYear() +
+        "-" +
+        String(today.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(today.getDate()).padStart(2, "0");
 
     // Get therapist and availability
     useEffect(() => {
         const getTherapist = async () => {
             try {
-                const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                setLoading(true);
+                setError("");
 
-setClientTimezone(timezone);
-                // Get therapist using slug
+                const timezone =
+                    Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+                setClientTimezone(timezone);
+
                 const response = await api.get(
                     `/auth/public/${slug}`
                 );
 
-                const therapist = response.data.therapist;
+                const therapistData = response.data.therapist;
 
-                // Save therapist ID
-                setTherapistId(therapist._id);
+                setTherapist(therapistData);
+                setTherapistId(therapistData._id);
 
-                // Get therapist availability
                 const availabilityResponse = await api.get(
                     `/availability/public/${slug}`
                 );
 
-                const availableSlots =
-                    availabilityResponse.data.availability;
-
-                setAvailability(availableSlots);
-
-                console.log("AVAILABILITY:", availableSlots);
-
+                setAvailability(
+                    availabilityResponse.data.availability || []
+                );
             } catch (error) {
-                console.log(error);
+                console.error(error);
+                setError(
+                    error.response?.data?.message ||
+                    "Unable to load therapist details. Please try again."
+                );
+            } finally {
+                setLoading(false);
             }
         };
 
         getTherapist();
     }, [slug]);
-        
 
+    // Get already booked slots for selected date
     useEffect(() => {
-    const getBookedSlots = async () => {
-        if (!date || !therapistId) {
-            setBookedSlots([]);
-            return;
-        }
+        const getBookedSlots = async () => {
+            if (!date || !therapistId) {
+                setBookedSlots([]);
+                return;
+            }
 
-        try {
-            const response = await api.get(
-                `/bookings/public?therapistId=${therapistId}&date=${date}`
-            );
+            try {
+                const response = await api.get(
+                    `/bookings/public?therapistId=${therapistId}&date=${date}`
+                );
 
-            setBookedSlots(response.data.bookings);
-            console.log("BOOKED SLOTS:", response.data.bookings);
-            console.log("BOOKING DETAILS:", JSON.stringify(response.data.bookings, null, 2));
-        } catch (error) {
-            console.log(error);
-        }
-    };
+                setBookedSlots(response.data.bookings || []);
+            } catch (error) {
+                console.error(error);
+                setBookedSlots([]);
+            }
+        };
 
-    getBookedSlots();
-}, [date, therapistId]);
-    // Check whether selected date is available
+        getBookedSlots();
+    }, [date, therapistId]);
+
+    // Check whether the selected day is available
     const isAvailableDay = (selectedDate) => {
         if (!selectedDate || availability.length === 0) {
-            return true;
+            return false;
         }
 
+        const [year, month, day] = selectedDate
+            .split("-")
+            .map(Number);
+
         const dateObject = new Date(
-            selectedDate + "T00:00:00"
+            Date.UTC(year, month - 1, day)
         );
 
-        const day = dateObject.toLocaleDateString(
+        const selectedDay = dateObject.toLocaleDateString(
             "en-US",
             {
-                weekday: "long"
+                weekday: "long",
+                timeZone: "UTC"
             }
         );
 
         return availability.some(
-            (item) => item.day === day
+            (item) =>
+                item.day.trim().toLowerCase() ===
+                selectedDay.toLowerCase()
         );
     };
 
-    // Book session
+    // Generate available one-hour slots
+    const timeSlots = [];
+
+    if (date && isAvailableDay(date)) {
+        const [year, month, day] = date.split("-").map(Number);
+
+        const dateObject = new Date(
+            Date.UTC(year, month - 1, day)
+        );
+
+        const selectedDay = dateObject.toLocaleDateString(
+            "en-US",
+            {
+                weekday: "long",
+                timeZone: "UTC"
+            }
+        );
+
+        const selectedAvailability = availability.find(
+            (item) =>
+                item.day.trim().toLowerCase() ===
+                selectedDay.toLowerCase()
+        );
+
+        if (selectedAvailability) {
+            const startParts =
+                selectedAvailability.startTime.split(":").map(Number);
+
+            const endParts =
+                selectedAvailability.endTime.split(":").map(Number);
+
+            const startMinutes =
+                startParts[0] * 60 + (startParts[1] || 0);
+
+            const endMinutes =
+                endParts[0] * 60 + (endParts[1] || 0);
+
+            for (
+                let start = startMinutes;
+                start + 60 <= endMinutes;
+                start += 60
+            ) {
+                const slotStartHour = String(
+                    Math.floor(start / 60)
+                ).padStart(2, "0");
+
+                const slotStartMinute = String(
+                    start % 60
+                ).padStart(2, "0");
+
+                const slotEndHour = String(
+                    Math.floor((start + 60) / 60)
+                ).padStart(2, "0");
+
+                const slotEndMinute = String(
+                    (start + 60) % 60
+                ).padStart(2, "0");
+
+                const slotStartTime =
+                    `${slotStartHour}:${slotStartMinute}`;
+
+                const slotEndTime =
+                    `${slotEndHour}:${slotEndMinute}`;
+
+                const isBooked = bookedSlots.some(
+                    (booking) =>
+                        booking.status === "booked" &&
+                        booking.startTime < slotEndTime &&
+                        booking.endTime > slotStartTime
+                );
+
+                if (!isBooked) {
+                    timeSlots.push({
+                        startTime: slotStartTime,
+                        endTime: slotEndTime
+                    });
+                }
+            }
+        }
+    }
+
+    // Book a session
     const handleBooking = async (e) => {
         e.preventDefault();
+
         if (!isAvailableDay(date)) {
-    alert("Therapist is not available on this day");
-    return;
-}
+            alert("Therapist is not available on this day.");
+            return;
+        }
+
+        if (!startTime || !endTime) {
+            alert("Please select an available time slot.");
+            return;
+        }
 
         try {
+            setBooking(true);
+
             await api.post("/bookings/public", {
-    therapistId: therapistId,
-    clientName,
-    clientEmail,
-    date,
-    startTime,
-    endTime,
-    clientTimezone: clientTimezone
-});
+                therapistId,
+                clientName,
+                clientEmail,
+                date,
+                startTime,
+                endTime,
+                clientTimezone
+            });
 
             alert("Booking created successfully!");
 
             setClientName("");
             setClientEmail("");
             setDate("");
-
+            setStartTime("");
+            setEndTime("");
+            setBookedSlots([]);
         } catch (error) {
             alert(
                 error.response?.data?.message ||
-                "Booking failed"
+                "Booking failed. Please try again."
             );
+        } finally {
+            setBooking(false);
         }
     };
-     
 
-      const timeSlots = [];
-
-if (date) {
-    // Get weekday from selected date
-    const [year, month, day] = date.split("-").map(Number);
-
-    const dateObject = new Date(Date.UTC(year, month - 1, day));
-
-    const selectedDay = dateObject.toLocaleDateString("en-US", {
-        weekday: "long",
-        timeZone: "UTC"
-    });
-
-    console.log("SELECTED DAY:", selectedDay);
-    console.log("AVAILABILITY:", availability);
-
-    const selectedAvailability = availability.find(
-        (item) => item.day.trim().toLowerCase() === selectedDay.toLowerCase()
-    );
-
-    console.log("MATCHED AVAILABILITY:", selectedAvailability);
-
-    if (selectedAvailability) {
-        let start = parseInt(
-            selectedAvailability.startTime.split(":")[0]
+    if (loading) {
+        return (
+            <div className="booking-page">
+                <div className="booking-loading">
+                    <div className="booking-spinner"></div>
+                    <p>Loading therapist details...</p>
+                </div>
+            </div>
         );
-
-        const end = parseInt(
-            selectedAvailability.endTime.split(":")[0]
-        );
-
-        console.log("START HOUR:", start);
-console.log("END HOUR:", end);
-
-        while (start < end) {
-            const startHour = String(start).padStart(2, "0");
-            const endHour = String(start + 1).padStart(2, "0");
-
-            const slotStartTime = `${startHour}:00`;
-            const slotEndTime = `${endHour}:00`;
-
-            const isBooked = bookedSlots.some((booking) => {
-                return (
-                    booking.status === "booked" &&
-                    booking.startTime < slotEndTime &&
-                    booking.endTime > slotStartTime
-                );
-            });
-
-            if (!isBooked) {
-                timeSlots.push({
-                    startTime: slotStartTime,
-                    endTime: slotEndTime
-                });
-            }
-
-            start++;
-        }
     }
-}
 
-console.log("GENERATED TIME SLOTS:", timeSlots);
-    return (
-        <div>
-            <h1>Book a Session</h1>
-
-            <h2>Available Times</h2>
-
-            {availability.length === 0 ? (
-                <p>No availability found.</p>
-            ) : (
-                availability.map((item) => (
-                    <div key={item._id}>
-                        <p>
-                            <strong>{item.day}</strong>
-                            {" : "}
-                            {item.startTime} - {item.endTime}
-                        </p>
-                    </div>
-                ))
-            )}
-             
-             <p>
-    Your timezone: {clientTimezone}
-</p>
-
-            <form onSubmit={handleBooking}>
-
-                {/* Client Name */}
-                <input
-                    type="text"
-                    placeholder="Your Name"
-                    value={clientName}
-                    onChange={(e) =>
-                        setClientName(e.target.value)
-                    }
-                    required
-                />
-
-                <br /><br />
-
-                {/* Client Email */}
-                <input
-                    type="email"
-                    placeholder="Your Email"
-                    value={clientEmail}
-                    onChange={(e) =>
-                        setClientEmail(e.target.value)
-                    }
-                    required
-                />
-
-                <br /><br />
-
-                {/* Date */}
-                <label>Date:</label>
-
-                 <input
-    type="date"
-    value={date}
-    min="2026-09-25"
-    onChange={(e) => setDate(e.target.value)}
-    required
-/>
-                <br /><br />
-
-                    {/* Available Time Slot */}
-<label>Available Time Slot:</label>
-
-<select
-    value={startTime}
-    onChange={(e) => {
-        const selectedStartTime = e.target.value;
-        setStartTime(selectedStartTime);
-
-        const selectedSlot = timeSlots.find(
-            (slot) => slot.startTime === selectedStartTime
+    if (error) {
+        return (
+            <div className="booking-page">
+                <div className="booking-error">
+                    <h2>Unable to load page</h2>
+                    <p>{error}</p>
+                </div>
+            </div>
         );
+    }
 
-        if (selectedSlot) {
-            setEndTime(selectedSlot.endTime);
-        }
-    }}
-    required
->
-    <option value="">Select a time</option>
+    return (
+        <div className="booking-page">
+            <div className="booking-layout">
 
-    {timeSlots.map((slot, index) => (
-        <option
-            key={index}
-            value={slot.startTime}
-        >
-            {slot.startTime} - {slot.endTime}
-        </option>
-    ))}
-</select>
-                <br /><br />
+                {/* Left side */}
+                <div className="booking-intro">
+                    <div className="booking-brand">
+                        <span className="booking-brand-icon">U</span>
+                        <span>Unfazed</span>
+                    </div>
 
-                <button type="submit">
-                    Book Session
-                </button>
+                    <div className="booking-intro-content">
+                        <span className="booking-eyebrow">
+                            YOUR WELLNESS JOURNEY
+                        </span>
 
-            </form>
+                        <h1>
+                            Take the first step toward a
+                            <span> healthier you.</span>
+                        </h1>
+
+                        <p className="booking-intro-text">
+                            Your mental well-being matters.
+                            Schedule a session with your therapist
+                            and make time for yourself.
+                        </p>
+
+                        <div className="booking-benefits">
+                            <div className="booking-benefit">
+                                <span className="benefit-icon">✓</span>
+                                <div>
+                                    <strong>Personalized care</strong>
+                                    <p>Sessions focused on your needs.</p>
+                                </div>
+                            </div>
+
+                            <div className="booking-benefit">
+                                <span className="benefit-icon">✓</span>
+                                <div>
+                                    <strong>Convenient scheduling</strong>
+                                    <p>Choose a time that works for you.</p>
+                                </div>
+                            </div>
+
+                            <div className="booking-benefit">
+                                <span className="benefit-icon">✓</span>
+                                <div>
+                                    <strong>A safe space</strong>
+                                    <p>Take a moment for your mental health.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p className="booking-footer-note">
+                        Your journey to feeling better starts here.
+                    </p>
+                </div>
+
+                {/* Right side */}
+                <div className="booking-form-section">
+                    <div className="booking-form-card">
+
+                        <div className="booking-form-heading">
+                            <span className="booking-form-label">
+                                APPOINTMENT
+                            </span>
+
+                            <h2>Book a session</h2>
+
+                            <p>
+                                Fill in your details and select
+                                an available date and time.
+                            </p>
+                        </div>
+
+                        {therapist && (
+                            <div className="booking-therapist">
+                                <div className="therapist-avatar">
+                                    {therapist.name
+                                        ? therapist.name.charAt(0).toUpperCase()
+                                        : "T"}
+                                </div>
+
+                                <div>
+                                    <span className="therapist-label">
+                                        YOUR THERAPIST
+                                    </span>
+
+                                    <h3>{therapist.name}</h3>
+
+                                    {therapist.specializations?.length > 0 && (
+                                        <p>
+                                            {therapist.specializations.join(", ")}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="booking-availability">
+                            <h3>
+                                <span className="availability-dot"></span>
+                                Weekly availability
+                            </h3>
+
+                            {availability.length === 0 ? (
+                                <p className="availability-empty">
+                                    No availability has been added yet.
+                                    Please check back later.
+                                </p>
+                            ) : (
+                                <div className="availability-list">
+                                    {availability.map((item) => (
+                                        <div
+                                            className="availability-item"
+                                            key={item._id}
+                                        >
+                                            <span>{item.day}</span>
+                                            <strong>
+                                                {item.startTime} – {item.endTime}
+                                            </strong>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        <form
+                            className="client-booking-form"
+                            onSubmit={handleBooking}
+                        >
+                            <div className="booking-section-title">
+                                <span>01</span>
+                                <h3>Your details</h3>
+                            </div>
+
+                            <div className="booking-field">
+                                <label htmlFor="clientName">
+                                    Full name
+                                </label>
+
+                                <input
+                                    id="clientName"
+                                    type="text"
+                                    placeholder="Enter your full name"
+                                    value={clientName}
+                                    onChange={(e) =>
+                                        setClientName(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div className="booking-field">
+                                <label htmlFor="clientEmail">
+                                    Email address
+                                </label>
+
+                                <input
+                                    id="clientEmail"
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    value={clientEmail}
+                                    onChange={(e) =>
+                                        setClientEmail(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div className="booking-section-title booking-date-title">
+                                <span>02</span>
+                                <h3>Choose your session</h3>
+                            </div>
+
+                            <div className="booking-field">
+                                <label htmlFor="bookingDate">
+                                    Preferred date
+                                </label>
+
+                                <input
+                                    id="bookingDate"
+                                    type="date"
+                                    value={date}
+                                    min={minDate}
+                                    onChange={(e) => {
+                                        setDate(e.target.value);
+                                        setStartTime("");
+                                        setEndTime("");
+                                    }}
+                                    required
+                                />
+                            </div>
+
+                            {date && !isAvailableDay(date) && (
+                                <div className="booking-notice">
+                                    The therapist is not available on this
+                                    day. Please select another date.
+                                </div>
+                            )}
+
+                            {date && isAvailableDay(date) && (
+                                <div className="booking-field">
+                                    <label htmlFor="bookingTime">
+                                        Available time slot
+                                    </label>
+
+                                    <select
+                                        id="bookingTime"
+                                        value={startTime}
+                                        onChange={(e) => {
+                                            const selectedStartTime =
+                                                e.target.value;
+
+                                            setStartTime(selectedStartTime);
+
+                                            const selectedSlot =
+                                                timeSlots.find(
+                                                    (slot) =>
+                                                        slot.startTime ===
+                                                        selectedStartTime
+                                                );
+
+                                            setEndTime(
+                                                selectedSlot
+                                                    ? selectedSlot.endTime
+                                                    : ""
+                                            );
+                                        }}
+                                        required
+                                    >
+                                        <option value="">
+                                            Select a time
+                                        </option>
+
+                                        {timeSlots.map((slot, index) => (
+                                            <option
+                                                key={index}
+                                                value={slot.startTime}
+                                            >
+                                                {slot.startTime} – {slot.endTime}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {timeSlots.length === 0 && (
+                                        <p className="booking-no-slots">
+                                            No time slots are available
+                                            for this date.
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+
+                            <div className="booking-timezone">
+                                <span>◷</span>
+                                <div>
+                                    <strong>Your timezone</strong>
+                                    <p>
+                                        {clientTimezone || "Not detected"}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="booking-submit-btn"
+                                disabled={
+                                    booking ||
+                                    availability.length === 0 ||
+                                    !isAvailableDay(date) ||
+                                    timeSlots.length === 0
+                                }
+                            >
+                                {booking
+                                    ? "Booking your session..."
+                                    : "Confirm booking →"}
+                            </button>
+
+                            <p className="booking-secure-note">
+                                Please check your selected date and time
+                                before confirming.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
