@@ -6,8 +6,15 @@ const {
 
 const authMiddleware = require("../middleware/authMiddleware");
 
+const requireFeature = require("../middleware/requireFeature");
+
 const router = express.Router();
 
-router.get("/", authMiddleware, getAnalytics);
+router.get(
+    "/",
+    authMiddleware,
+    requireFeature("analytics"),
+    getAnalytics
+);
 
 module.exports = router;
