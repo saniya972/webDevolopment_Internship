@@ -4541,3 +4541,142 @@
     position: relative;
     z-index: 10;
 }
+
+/* ==============================
+   UNFAZED REGISTER PAGE
+============================== */
+
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(
+        135deg,
+        #eef7f4 0%,
+        #f5f3ff 50%,
+        #fdf6f0 100%
+    );
+    font-family: inherit;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 42px;
+    background: #ffffff;
+    border: 1px solid #e8eceb;
+    border-radius: 22px;
+    box-shadow: 0 18px 55px rgba(31, 67, 58, 0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.register-card h2 {
+    margin: 0;
+    color: #173f35;
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.7px;
+}
+
+.register-card > p {
+    margin: -8px 0 4px;
+    color: #7b8985;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.register-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 16px;
+    border: 1px solid #dce5e1;
+    border-radius: 12px;
+    background: #f9fbfa;
+    color: #243c35;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.register-card input::placeholder {
+    color: #9aa7a2;
+}
+
+.register-card input:focus {
+    border-color: #4a9b82;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(74, 155, 130, 0.12);
+}
+
+.register-card button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #245c4c;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.register-card button:hover:not(:disabled) {
+    background: #194638;
+    transform: translateY(-2px);
+}
+
+.register-card button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.register-card a {
+    color: #28745e;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-card a:hover {
+    text-decoration: underline;
+}
+
+.register-card p:last-child {
+    margin: 0;
+    color: #75827d;
+    font-size: 14px;
+    text-align: center;
+}
+
+.register-card p[style*="red"] {
+    margin: 0;
+    padding: 12px;
+    border-radius: 10px;
+    background: #fff1f0;
+    color: #b42318 !important;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Mobile responsive */
+
+@media (max-width: 480px) {
+    .register-page {
+        padding: 20px 14px;
+    }
+
+    .register-card {
+        padding: 30px 22px;
+        border-radius: 18px;
+    }
+
+    .register-card h2 {
+        font-size: 25px;
+    }
+}

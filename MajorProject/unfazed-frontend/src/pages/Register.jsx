@@ -43,8 +43,8 @@ function Register() {
     };
 
     return (
-        <div className="login-container">
-            <form className="login-form" onSubmit={handleRegister}>
+        <div className="register-page">
+            <form className="register-card" onSubmit={handleRegister}>
                 <h2>Create Your Account</h2>
                 <p>Sign up to start using Unfazed</p>
 
