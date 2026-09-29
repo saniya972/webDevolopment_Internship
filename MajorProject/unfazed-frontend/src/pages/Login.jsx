@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 import api from "../api/axios";
 import "../App.css";
 
@@ -143,6 +143,10 @@ function Login() {
                             <span>🔒</span>
                             Your information is kept private and secure.
                         </div>
+                        <div className="login-signup">
+    Don't have an account?{" "}
+    <Link to="/register">Sign up</Link>
+</div>
                     </div>
                 </div>
 

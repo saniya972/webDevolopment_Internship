@@ -5,9 +5,25 @@ const jwt = require("jsonwebtoken");
 // REGISTER
 const registerTherapist = async (req, res) => {
     try {
-        const { name, email, password, slug } = req.body;
+        const { name, email, password } = req.body;
 
-        const existingTherapist = await Therapist.findOne({ email });
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                message: "Name, email and password are required"
+            });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({
+                message: "Password must be at least 8 characters"
+            });
+        }
+
+        const normalizedEmail = email.trim().toLowerCase();
+
+        const existingTherapist = await Therapist.findOne({
+            email: normalizedEmail
+        });
 
         if (existingTherapist) {
             return res.status(400).json({
@@ -17,9 +33,17 @@ const registerTherapist = async (req, res) => {
 
         const password_hash = await bcrypt.hash(password, 10);
 
+        const baseSlug = name
+            .trim()
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "") || "therapist";
+
+        const slug = `${baseSlug}-${Date.now()}`;
+
         const therapist = await Therapist.create({
-            name,
-            email,
+            name: name.trim(),
+            email: normalizedEmail,
             password_hash,
             slug
         });
@@ -35,13 +59,13 @@ const registerTherapist = async (req, res) => {
         });
 
     } catch (error) {
+        console.log("Registration error:", error.message);
+
         res.status(500).json({
-            message: "Registration failed",
-            error: error.message
+            message: "Registration failed"
         });
     }
 };
-
 
 // LOGIN
 const loginTherapist = async (req, res) => {
