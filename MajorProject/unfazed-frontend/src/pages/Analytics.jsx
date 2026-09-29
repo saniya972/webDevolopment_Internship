@@ -1,6 +1,8 @@
+
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import UpgradePrompt from "../components/UpgradePrompt";
+import "../App.css";
 
 function Analytics() {
     const [analytics, setAnalytics] = useState(null);
@@ -43,39 +45,92 @@ function Analytics() {
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <div className="analytics-message analytics-error">
+                {error}
+            </div>
+        );
     }
 
     if (!analytics) {
-        return <p>Loading analytics...</p>;
+        return (
+            <div className="analytics-message">
+                Loading analytics...
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h1>Analytics Dashboard</h1>
-
-            <h3>Total Clients: {analytics.totalClients}</h3>
-
-            <h3>Total Bookings: {analytics.totalBookings}</h3>
-
-            <h3>Active Clients: {analytics.activeClients}</h3>
-
-            <h3>
-                No-show Rate: {analytics.noShowRate}%
-            </h3>
-
-            <h2>Revenue Trend</h2>
-
-            {analytics.revenueTrend.length === 0 ? (
-                <p>No revenue data available yet.</p>
-            ) : (
-                analytics.revenueTrend.map((item, index) => (
-                    <p key={index}>
-                        {item._id.month}/{item._id.year} :
-                        ₹{item.revenue}
+        <div className="analytics-page">
+            <div className="analytics-header">
+                <div>
+                    <h1>Analytics Dashboard</h1>
+                    <p>
+                        Track your practice performance and growth.
                     </p>
-                ))
-            )}
+                </div>
+            </div>
+
+            <div className="analytics-stats">
+
+                <div className="analytics-card">
+                    <div className="analytics-icon">👥</div>
+                    <p>Total Clients</p>
+                    <h2>{analytics.totalClients}</h2>
+                </div>
+
+                <div className="analytics-card">
+                    <div className="analytics-icon">📅</div>
+                    <p>Total Bookings</p>
+                    <h2>{analytics.totalBookings}</h2>
+                </div>
+
+                <div className="analytics-card">
+                    <div className="analytics-icon">💚</div>
+                    <p>Active Clients</p>
+                    <h2>{analytics.activeClients}</h2>
+                </div>
+
+                <div className="analytics-card">
+                    <div className="analytics-icon">📊</div>
+                    <p>No-show Rate</p>
+                    <h2>{analytics.noShowRate}%</h2>
+                </div>
+
+            </div>
+
+            <div className="revenue-section">
+                <h2>Revenue Trend</h2>
+                <p className="revenue-description">
+                    Review your monthly revenue.
+                </p>
+
+                {analytics.revenueTrend.length === 0 ? (
+                    <div className="revenue-empty">
+                        <span>💰</span>
+                        <p>No revenue data available yet.</p>
+                    </div>
+                ) : (
+                    <div className="revenue-list">
+                        {analytics.revenueTrend.map((item, index) => (
+                            <div
+                                className="revenue-item"
+                                key={index}
+                            >
+                                <div>
+                                    <span className="revenue-month">
+                                        {item._id.month}/{item._id.year}
+                                    </span>
+                                </div>
+
+                                <strong>
+                                    ₹{item.revenue}
+                                </strong>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

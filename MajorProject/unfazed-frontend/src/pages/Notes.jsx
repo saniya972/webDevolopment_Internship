@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -10,9 +11,7 @@ function Notes() {
     const [notes, setNotes] = useState([]);
 
     const editor = useEditor({
-        extensions: [
-            StarterKit
-        ],
+        extensions: [StarterKit],
         content: ""
     });
 
@@ -43,8 +42,6 @@ function Notes() {
                     Authorization: `Bearer ${token}`
                 }
             });
-
-            console.log(response.data.notes);
 
             setNotes(response.data.notes);
         } catch (error) {
@@ -82,7 +79,6 @@ function Notes() {
             setType("private");
 
             getNotes();
-
         } catch (error) {
             console.log(error);
             alert("Failed to save note");
@@ -95,156 +91,277 @@ function Notes() {
     }, []);
 
     return (
-        <div style={{ width: "100%" }}>
+        <div className="notes-page">
 
-            <h1>Session Notes</h1>
+            {/* Page Header */}
+            <div className="notes-header">
+                <div>
+                    <span className="notes-tag">
+                        THERAPY DOCUMENTATION
+                    </span>
 
-            {/* Client Selection */}
+                    <h1>Session Notes</h1>
 
-            <select
-                value={clientId}
-                onChange={(e) => setClientId(e.target.value)}
-            >
-                <option value="">Select Client</option>
+                    <p>
+                        Create, organize and review your
+                        client session notes securely.
+                    </p>
+                </div>
 
-                {clients.map((client) => (
-                    <option
-                        key={client._id}
-                        value={client._id}
-                    >
-                        {client.name}
-                    </option>
-                ))}
-            </select>
+                <div className="notes-header-icon">
+                    📝
+                </div>
+            </div>
 
-            <br />
-            <br />
+            {/* Create Note Card */}
+            <div className="notes-create-card">
 
-            {/* Editor */}
+                <div className="notes-section-heading">
+                    <div className="notes-heading-icon">
+                        ✍️
+                    </div>
 
-            <div
-                style={{
-                    border: "1px solid black",
-                    minHeight: "200px",
-                    padding: "10px",
-                    width: "100%",
-                    boxSizing: "border-box"
-                }}
-            >
+                    <div>
+                        <h2>Create Session Note</h2>
+                        <p>
+                            Record important details from your
+                            therapy sessions.
+                        </p>
+                    </div>
+                </div>
 
-                {/* Formatting Buttons */}
+                {/* Client Selection */}
+                <div className="notes-form-group">
+                    <label>Select Client</label>
 
-                <div style={{ marginBottom: "10px" }}>
-
-                    <button
-                        onClick={() =>
-                            editor.chain().focus().toggleBold().run()
+                    <select
+                        className="notes-select"
+                        value={clientId}
+                        onChange={(e) =>
+                            setClientId(e.target.value)
                         }
                     >
-                        Bold
-                    </button>
+                        <option value="">Select Client</option>
 
-                    <button
-                        onClick={() =>
-                            editor.chain().focus().toggleItalic().run()
-                        }
-                    >
-                        Italic
-                    </button>
+                        {clients.map((client) => (
+                            <option
+                                key={client._id}
+                                value={client._id}
+                            >
+                                {client.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                    <button
-                        onClick={() =>
-                            editor.chain().focus().toggleBulletList().run()
-                        }
-                    >
-                        Bullet List
-                    </button>
+                {/* Editor */}
+                <div className="notes-editor-card">
 
-                    <button
-                        onClick={() =>
-                            editor
-                                .chain()
-                                .focus()
-                                .toggleHeading({ level: 2 })
-                                .run()
-                        }
-                    >
-                        Heading
-                    </button>
+                    <div className="notes-editor-toolbar">
+                        <span className="notes-toolbar-label">
+                            Formatting
+                        </span>
+
+                        <div className="notes-toolbar-buttons">
+                            <button
+                                type="button"
+                                className={
+                                    editor?.isActive("bold")
+                                        ? "notes-tool-button active"
+                                        : "notes-tool-button"
+                                }
+                                disabled={!editor}
+                                onClick={() =>
+                                    editor?.chain()
+                                        .focus()
+                                        .toggleBold()
+                                        .run()
+                                }
+                            >
+                                <strong>B</strong>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={
+                                    editor?.isActive("italic")
+                                        ? "notes-tool-button active"
+                                        : "notes-tool-button"
+                                }
+                                disabled={!editor}
+                                onClick={() =>
+                                    editor?.chain()
+                                        .focus()
+                                        .toggleItalic()
+                                        .run()
+                                }
+                            >
+                                <em>I</em>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={
+                                    editor?.isActive("bulletList")
+                                        ? "notes-tool-button active"
+                                        : "notes-tool-button"
+                                }
+                                disabled={!editor}
+                                onClick={() =>
+                                    editor?.chain()
+                                        .focus()
+                                        .toggleBulletList()
+                                        .run()
+                                }
+                            >
+                                • List
+                            </button>
+
+                            <button
+                                type="button"
+                                className={
+                                    editor?.isActive("heading", {
+                                        level: 2
+                                    })
+                                        ? "notes-tool-button active"
+                                        : "notes-tool-button"
+                                }
+                                disabled={!editor}
+                                onClick={() =>
+                                    editor?.chain()
+                                        .focus()
+                                        .toggleHeading({
+                                            level: 2
+                                        })
+                                        .run()
+                                }
+                            >
+                                H2
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="notes-editor-content">
+                        <EditorContent editor={editor} />
+                    </div>
 
                 </div>
 
-                {/* TipTap Editor */}
+                {/* Note Type */}
+                <div className="notes-form-group notes-type-group">
+                    <label>Note Visibility</label>
 
-                <EditorContent editor={editor} />
+                    <select
+                        className="notes-select"
+                        value={type}
+                        onChange={(e) =>
+                            setType(e.target.value)
+                        }
+                    >
+                        <option value="private">
+                            Private Note
+                        </option>
 
+                        <option value="shared">
+                            Shared Note
+                        </option>
+                    </select>
+
+                    <span className="notes-helper-text">
+                        Choose whether the note is private
+                        or shared.
+                    </span>
+                </div>
+
+                {/* Save Button */}
+                <div className="notes-save-row">
+                    <button
+                        type="button"
+                        className="notes-save-button"
+                        onClick={saveNote}
+                    >
+                        <span>💾</span> Save Note
+                    </button>
+                </div>
             </div>
 
-            <br />
-
-            {/* Note Type */}
-
-            <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-            >
-                <option value="private">
-                    Private Note
-                </option>
-
-                <option value="shared">
-                    Shared Note
-                </option>
-            </select>
-
-            <br />
-            <br />
-
-            <button onClick={saveNote}>
-                Save Note
-            </button>
-
-            <hr />
-
             {/* Saved Notes */}
+            <div className="notes-saved-section">
 
-            <h2>Saved Notes</h2>
-
-            {notes.length === 0 ? (
-                <p>No notes available.</p>
-            ) : (
-                notes.map((note) => (
-                    <div
-                        key={note._id}
-                        style={{
-                            border: "1px solid gray",
-                            padding: "10px",
-                            marginBottom: "10px"
-                        }}
-                    >
-
+                <div className="notes-saved-header">
+                    <div>
+                        <h2>Saved Notes</h2>
                         <p>
-                            <strong>Type:</strong>{" "}
-                            {note.type}
+                            Your previously saved session records.
                         </p>
-
-                        <p>
-                            <strong>Date:</strong>{" "}
-                            {new Date(
-                                note.createdAt
-                            ).toLocaleDateString()}
-                        </p>
-
-                        <div
-                            dangerouslySetInnerHTML={{
-                                __html: note.content
-                            }}
-                        />
-
                     </div>
-                ))
-            )}
 
+                    <span className="notes-count">
+                        {notes.length} Notes
+                    </span>
+                </div>
+
+                {notes.length === 0 ? (
+                    <div className="notes-empty-state">
+                        <div className="notes-empty-icon">
+                            📋
+                        </div>
+
+                        <h3>No notes available</h3>
+
+                        <p>
+                            Your saved session notes will
+                            appear here.
+                        </p>
+                    </div>
+                ) : (
+                    <div className="notes-list">
+                        {notes.map((note) => (
+                            <div
+                                key={note._id}
+                                className="notes-item-card"
+                            >
+                                <div className="notes-item-header">
+                                    <div className="notes-item-title">
+                                        <span className="notes-item-icon">
+                                            📝
+                                        </span>
+
+                                        <div>
+                                            <h3>Session Note</h3>
+
+                                            <p>
+                                                {new Date(
+                                                    note.createdAt
+                                                ).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <span
+                                        className={`notes-type-badge ${
+                                            note.type === "shared"
+                                                ? "shared"
+                                                : "private"
+                                        }`}
+                                    >
+                                        {note.type === "shared"
+                                            ? "Shared"
+                                            : "Private"}
+                                    </span>
+                                </div>
+
+                                <div
+                                    className="notes-item-content"
+                                    dangerouslySetInnerHTML={{
+                                        __html: note.content
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

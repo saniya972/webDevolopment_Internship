@@ -5,16 +5,39 @@ function UpgradePrompt() {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <h3>🔒 Upgrade Required</h3>
+        <div className="upgrade-page">
+            <div className="upgrade-card">
 
-            <p>
-                This feature is available on a higher plan.
-            </p>
+                <div className="upgrade-icon">
+                    🔒
+                </div>
 
-            <button onClick={() => navigate("/subscription")}>
-                Upgrade Subscription
-            </button>
+                <span className="upgrade-tag">
+                    PREMIUM FEATURE
+                </span>
+
+                <h2>Upgrade Required</h2>
+
+                <p>
+                    This feature is available on a higher
+                    plan. Upgrade your subscription to
+                    unlock analytics and explore your
+                    practice insights.
+                </p>
+
+                <button
+                    className="upgrade-button"
+                    onClick={() => navigate("/subscription")}
+                >
+                    Upgrade Subscription
+                    <span>→</span>
+                </button>
+
+                <div className="upgrade-footer">
+                    Unlock more features with Unfazed
+                </div>
+
+            </div>
         </div>
     );
 }

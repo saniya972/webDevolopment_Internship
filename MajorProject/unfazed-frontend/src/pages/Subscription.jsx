@@ -1,6 +1,6 @@
-
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import "../App.css";
 
 function Subscription() {
     const [subscription, setSubscription] = useState(null);
@@ -33,6 +33,7 @@ function Subscription() {
         {
             name: "Free",
             price: "₹0",
+            period: "forever",
             description: "For therapists getting started",
             features: [
                 "Therapist profile",
@@ -44,6 +45,7 @@ function Subscription() {
         {
             name: "Basic",
             price: "Demo",
+            period: "Preview",
             description: "For growing therapy practices",
             features: [
                 "Everything in Free",
@@ -56,6 +58,7 @@ function Subscription() {
         {
             name: "Pro",
             price: "Demo",
+            period: "Preview",
             description: "For established therapy practices",
             features: [
                 "Everything in Basic",
@@ -67,46 +70,55 @@ function Subscription() {
     ];
 
     if (loading) {
-        return <p>Loading subscription...</p>;
+        return (
+            <div className="subscription-loading">
+                <div className="subscription-spinner"></div>
+                <p>Loading subscription...</p>
+            </div>
+        );
     }
 
     return (
-        <div style={{ padding: "24px" }}>
-            <h1>Subscription Plans</h1>
+        <div className="subscription-page">
+            <div className="subscription-header">
+                <span className="subscription-tag">
+                    UNFAZED FOR THERAPISTS
+                </span>
 
-            <p>
-                Choose a plan for your therapy practice.
-            </p>
+                <h1>Subscription Plans</h1>
+
+                <p>
+                    Choose a plan that fits your therapy practice
+                    and manage your practice with confidence.
+                </p>
+            </div>
 
             {subscription && (
-                <div
-                    style={{
-                        padding: "15px",
-                        marginBottom: "25px",
-                        background: "#e8f5e9",
-                        borderRadius: "8px"
-                    }}
-                >
-                    <h3>Current Subscription</h3>
+                <div className="current-subscription">
+                    <div className="current-plan-icon">✓</div>
 
-                    <p>
-                        Plan: <strong>{subscription.plan}</strong>
-                    </p>
+                    <div className="current-plan-details">
+                        <span className="current-plan-label">
+                            YOUR CURRENT SUBSCRIPTION
+                        </span>
 
-                    <p>
-                        Status: <strong>{subscription.status}</strong>
-                    </p>
+                        <h3>
+                            {subscription.plan} Plan
+                        </h3>
+
+                        <p>
+                            Your subscription is currently{" "}
+                            <strong>{subscription.status}</strong>.
+                        </p>
+                    </div>
+
+                    <span className="current-plan-badge">
+                        Active Plan
+                    </span>
                 </div>
             )}
 
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                        "repeat(auto-fit, minmax(230px, 1fr))",
-                    gap: "20px"
-                }}
-            >
+            <div className="subscription-plans">
                 {plans.map((plan) => {
                     const isCurrent =
                         subscription?.plan === plan.name.toLowerCase();
@@ -114,83 +126,118 @@ function Subscription() {
                     return (
                         <div
                             key={plan.name}
-                            style={{
-                                border: "1px solid #ddd",
-                                borderRadius: "12px",
-                                padding: "22px",
-                                background: "#fff",
-                                boxShadow: "0 2px 8px #00000010"
-                            }}
+                            className={`plan-card ${
+                                plan.name === "Pro" ? "pro-plan" : ""
+                            } ${
+                                isCurrent ? "current-plan-card" : ""
+                            }`}
                         >
-                            <h2>{plan.name}</h2>
+                            {plan.name === "Pro" && (
+                                <div className="popular-label">
+                                    PREMIUM PLAN
+                                </div>
+                            )}
 
-                            <h3>{plan.price}</h3>
+                            <div className="plan-card-header">
+                                <h2>{plan.name}</h2>
+                                <p>{plan.description}</p>
+                            </div>
 
-                            <p>{plan.description}</p>
+                            <div className="plan-price">
+                                <h3>{plan.price}</h3>
+                                <span>{plan.period}</span>
+                            </div>
 
-                            <hr />
+                            <div className="plan-divider"></div>
 
-                            <ul style={{ paddingLeft: "20px" }}>
+                            <h4 className="features-heading">
+                                What's included
+                            </h4>
+
+                            <ul className="plan-features">
                                 {plan.features.map((feature) => (
-                                    <li
-                                        key={feature}
-                                        style={{ marginBottom: "10px" }}
-                                    >
+                                    <li key={feature}>
+                                        <span className="feature-check">
+                                            ✓
+                                        </span>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
 
-                            {isCurrent ? (
-                                <button disabled>
-                                    Current Plan
-                                </button>
-                            ) : plan.name === "Free" ? (
-                                <button disabled>
-                                    Free Plan
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() =>
-                                        setSelectedPlan(plan.name)
-                                    }
-                                >
-                                    Preview {plan.name}
-                                </button>
-                            )}
+                            <div className="plan-button-container">
+                                {isCurrent ? (
+                                    <button
+                                        className="plan-button current-button"
+                                        disabled
+                                    >
+                                        Current Plan
+                                    </button>
+                                ) : plan.name === "Free" ? (
+                                    <button
+                                        className="plan-button free-button"
+                                        disabled
+                                    >
+                                        Free Plan
+                                    </button>
+                                ) : (
+                                    <button
+                                        className={`plan-button ${
+                                            plan.name === "Pro"
+                                                ? "pro-button"
+                                                : "basic-button"
+                                        }`}
+                                        onClick={() =>
+                                            setSelectedPlan(plan.name)
+                                        }
+                                    >
+                                        Preview {plan.name}
+                                        <span> → </span>
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     );
                 })}
             </div>
 
             {selectedPlan && (
-                <div
-                    style={{
-                        marginTop: "25px",
-                        padding: "20px",
-                        border: "1px solid #ddd",
-                        borderRadius: "10px",
-                        background: "#f5f5f5"
-                    }}
-                >
-                    <h3>{selectedPlan} Plan Demo</h3>
+                <div className="preview-overlay">
+                    <div className="preview-modal">
+                        <button
+                            className="preview-close"
+                            onClick={() => setSelectedPlan(null)}
+                            aria-label="Close preview"
+                        >
+                            ×
+                        </button>
 
-                    <p>
-                        This is a subscription upgrade demo.
-                        No payment has been made and your current
-                        subscription has not changed.
-                    </p>
+                        <div className="preview-icon">✦</div>
 
-                    <p>
-                        Real payment integration can be added
-                        when a payment gateway account is available.
-                    </p>
+                        <span className="subscription-tag">
+                            PLAN PREVIEW
+                        </span>
 
-                    <button
-                        onClick={() => setSelectedPlan(null)}
-                    >
-                        Close Preview
-                    </button>
+                        <h2>{selectedPlan} Plan Demo</h2>
+
+                        <p>
+                            This is a subscription upgrade demo.
+                            No payment has been made and your current
+                            subscription has not changed.
+                        </p>
+
+                        <div className="preview-notice">
+                            Real payment integration can be added
+                            when a payment gateway account is available.
+                        </div>
+
+                        <button
+                            className="plan-button basic-button"
+                            onClick={() => setSelectedPlan(null)}
+                        >
+                            Close Preview
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

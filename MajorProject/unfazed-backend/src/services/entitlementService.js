@@ -21,12 +21,19 @@ const canAccess = async (therapistId, featureKey) => {
             plan: subscription.plan
         });
 
+        console.log("Plan:", subscription.plan);
+console.log("Feature:", featureKey);
+console.log("Tier config:", tierConfig);
+
         if (!tierConfig) {
             return false;
         }
 
         // Check whether feature is enabled
-       return tierConfig.features[featureKey] === true;
+       //return tierConfig.features[featureKey] === true;
+       const result = tierConfig.features[featureKey] === true;
+console.log("Feature allowed:", result);
+return result;
 
     } catch (error) {
         console.log("Entitlement check failed:", error.message);
